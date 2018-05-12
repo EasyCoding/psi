@@ -1,65 +1,57 @@
-Name:       psi
-Version:    1.3
-Release:    1%{?dist}
+Name:           psi
+Version:        1.3
+Release:        1%{?dist}
 
-Summary:    Jabber client based on Qt
-License:    GPLv2+
-URL:        https://psi-im.org
+Summary:        Jabber client based on Qt
+License:        GPLv2+
+URL:            https://psi-im.org
 
-Source0:    https://sourceforge.net/projects/%{name}/files/Psi/%{version}/%{name}-%{version}.tar.xz
-Source1:    https://github.com/%{name}-im/%{name}-l10n/archive/%{version}.tar.gz#/%{name}-l10n-%{version}.tar.gz
-Source2:    https://github.com/%{name}-im/plugins/archive/%{version}.tar.gz#/%{name}-plugins-%{version}.tar.gz
+Source0:        https://sourceforge.net/projects/%{name}/files/Psi/%{version}/%{name}-%{version}.tar.xz
+Source1:        https://github.com/%{name}-im/%{name}-l10n/archive/%{version}.tar.gz#/%{name}-l10n-%{version}.tar.gz
+Source2:        https://github.com/%{name}-im/plugins/archive/%{version}.tar.gz#/%{name}-plugins-%{version}.tar.gz
 
+BuildRequires:  pkgconfig(Qt5XmlPatterns)
+BuildRequires:  pkgconfig(Qt5Multimedia)
+BuildRequires:  pkgconfig(Qt5X11Extras)
+BuildRequires:  cmake(Qt5LinguistTools)
+BuildRequires:  pkgconfig(Qt5Network)
+BuildRequires:  pkgconfig(xscrnsaver)
+BuildRequires:  pkgconfig(Qt5WebKit)
+BuildRequires:  pkgconfig(hunspell)
+BuildRequires:  pkgconfig(glib-2.0)
+BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(minizip)
 BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  desktop-file-utils
 BuildRequires:  pkgconfig(Qt5Gui)
 BuildRequires:  pkgconfig(Qt5Svg)
 BuildRequires:  pkgconfig(Qt5Xml)
-BuildRequires:  pkgconfig(Qt5WebKit)
-BuildRequires:  pkgconfig(Qt5XmlPatterns)
-BuildRequires:  pkgconfig(Qt5Network)
-BuildRequires:  pkgconfig(Qt5Multimedia)
-BuildRequires:  pkgconfig(Qt5DBus)
-BuildRequires:  pkgconfig(Qt5X11Extras)
-BuildRequires:  cmake(Qt5LinguistTools)
-BuildRequires:  pkgconfig(qjdns)
 BuildRequires:  pkgconfig(libidn)
+BuildRequires:  pkgconfig(zlib)
+BuildRequires:  qjdns-qt5-devel
+BuildRequires:  libgcrypt-devel
+BuildRequires:  libtidy-devel
 BuildRequires:  qca-qt5-devel
+BuildRequires:  libotr-devel
 BuildRequires:  ninja-build
 BuildRequires:  qca-devel
 BuildRequires:  gcc-c++
 BuildRequires:  cmake
 BuildRequires:  gcc
 
-BuildRequires:  libgcrypt-devel
-BuildRequires:  libotr-devel
-BuildRequires:  libtidy-devel
-
-
-BuildRequires:  pkgconfig(zlib)
-BuildRequires:  pkgconfig(glib-2.0)
-BuildRequires:  pkgconfig(enchant)
-BuildRequires:  pkgconfig(xscrnsaver)
-BuildRequires:  qconf >= 1:2.0
-BuildRequires:  desktop-file-utils
-
-# Required for SSL/TLS connections
-Requires:       qca-qt5-ossl%{?_isa}
-
-# Required for GnuPG encryption
-Requires:       qca-qt5-gnupg%{?_isa}
-
-Requires:       hicolor-icon-theme
 Recommends:     %{name}-plugins%{?_isa}
+Requires:       qca-qt5-gnupg%{?_isa}
+Requires:       qca-qt5-ossl%{?_isa}
+Requires:       hicolor-icon-theme
 
 # FIXME: wait for upstream to unbundle iris, rhbz#737304, https://github.com/psi-im/iris/issues/31
-Provides:   bundled(iris)
+Provides:       bundled(iris)
 
 # Obsolete and remove old subpackages
-Provides: %{name}-i18n = %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes: %{name}-i18n < %{?epoch:%{epoch}:}%{version}-%{release}
-Provides: %{name}-icons = %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes: %{name}-icons < %{?epoch:%{epoch}:}%{version}-%{release}
+Provides:       %{name}-i18n = %{?epoch:%{epoch}:}%{version}-%{release}
+Obsoletes:      %{name}-i18n < %{?epoch:%{epoch}:}%{version}-%{release}
+Provides:       %{name}-icons = %{?epoch:%{epoch}:}%{version}-%{release}
+Obsoletes:      %{name}-icons < %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description
 %{name} is the premiere Instant Messaging application designed for Microsoft
@@ -71,8 +63,8 @@ provides gateways to other protocols as AIM, ICQ, MSN and Yahoo!.
 If you want SSL support, install the qca-tls package.
 
 %package plugins
-Summary:    Additional plugins for %{name}
-Requires:   %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Summary:       Additional plugins for %{name}
+Requires:      %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description plugins
 This package adds additional plugins to %{name}.
@@ -99,7 +91,7 @@ rm -rf iris/src/jdns
 
 %build
 pushd %{_target_platform}
-    %cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DUSE_QT5=ON -DUSE_ENCHANT=ON -DUSE_HUNSPELL=OFF -DSEPARATE_QJDNS=ON -DENABLE_PLUGINS=ON -DENABLE_WEBKIT=ON ..
+    %cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DUSE_QT5=ON -DUSE_ENCHANT=OFF -DUSE_HUNSPELL=ON -DUSE_QJDNS=ON -DSEPARATE_QJDNS=ON -DENABLE_PLUGINS=ON -DENABLE_WEBKIT=ON ..
 popd
 %ninja_build -C %{_target_platform}
 
