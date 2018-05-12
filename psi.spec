@@ -60,7 +60,6 @@ Jabber, %{name} is a fast and lightweight messaging client that utilises the bes
 in open source technologies. %{name} contains all the features necessary to chat,
 with no bloated extras that slow your computer down. The Jabber protocol
 provides gateways to other protocols as AIM, ICQ, MSN and Yahoo!.
-If you want SSL support, install the qca-tls package.
 
 %package plugins
 Summary:       Additional plugins for %{name}
