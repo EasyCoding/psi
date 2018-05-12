@@ -50,6 +50,7 @@ Requires:       qca-qt5-ossl%{?_isa}
 Requires:       qca-qt5-gnupg%{?_isa}
 
 Requires:       hicolor-icon-theme
+Recommends:     %{name}-plugins%{?_isa}
 
 # FIXME: wait for upstream to unbundle iris, rhbz#737304, https://github.com/psi-im/iris/issues/31
 Provides:   bundled(iris)
