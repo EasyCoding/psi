@@ -10,9 +10,6 @@ Source0:        https://sourceforge.net/projects/%{name}/files/Psi/%{version}/%{
 Source1:        https://github.com/%{name}-im/%{name}-l10n/archive/%{version}.tar.gz#/%{name}-l10n-%{version}.tar.gz
 Source2:        https://github.com/%{name}-im/plugins/archive/%{version}.tar.gz#/%{name}-plugins-%{version}.tar.gz
 
-# Install AppData file for Gnome Software
-Patch0:         %{name}-add-appdata.patch
-
 BuildRequires:  pkgconfig(Qt5XmlPatterns)
 BuildRequires:  pkgconfig(Qt5Multimedia)
 BuildRequires:  pkgconfig(Qt5X11Extras)
@@ -74,7 +71,7 @@ This package adds additional plugins to %{name}.
 
 %prep
 # Unpacking main tarball...
-%autosetup
+%autosetup -p1
 
 # Unpacking tarball with additional locales...
 tar -xf %{SOURCE1} %{name}-l10n-%{version}/translations --strip=1
@@ -101,6 +98,9 @@ popd
 %install
 %ninja_install -C %{_target_platform}
 %find_lang %{name} --with-qt
+
+install -d %{buildroot}%{_datadir}/metainfo
+install -m 0644 -p %{name}.appdata.xml %{buildroot}%{_datadir}/metainfo/%{name}.appdata.xml
 
 %check
 appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/%{name}.appdata.xml
