@@ -63,7 +63,11 @@ If you want SSL support, install the qca-tls package.
 %package i18n
 Summary:    Language packs for %{name}
 BuildArch:  noarch
-Requires:   %{name} = %{version}
+Requires:   %{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+
+%package plugins
+Summary:    Additional plugins for %{name}
+Requires:   %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description -n %{name}-i18n
 This package adds internationalization to %{name}.
@@ -71,6 +75,8 @@ If you want to add a translation from http://%{name}-im.org,
 just put the .qm file in %{_datadir}/%{name} (you'll have to do
 this as root), and restart %{name}.
 
+%description plugins
+This package adds additional plugins to %{name}.
 
 %prep
 # Unpacking main tarball...
@@ -78,6 +84,7 @@ this as root), and restart %{name}.
 
 # Unpacking tarball with plugins...
 tar -C src/plugins -xf %{SOURCE2} plugins-%{version}/generic --strip=1
+sed -i 's/psi-plus/psi/g' src/plugins/CMakeLists.txt
 
 # Creating build directory...
 mkdir -p %{_target_platform}
@@ -88,7 +95,7 @@ rm -rf iris/src/jdns
 
 %build
 pushd %{_target_platform}
-    %cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DUSE_QT5=ON -DUSE_ENCHANT=ON -DUSE_HUNSPELL=OFF -DSEPARATE_QJDNS=ON -DENABLE_PLUGINS=ON -DENABLE_WEBKIT=OFF ..
+    %cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DUSE_QT5=ON -DUSE_ENCHANT=ON -DUSE_HUNSPELL=OFF -DSEPARATE_QJDNS=ON -DENABLE_PLUGINS=ON -DENABLE_WEBKIT=ON ..
 popd
 %ninja_build -C %{_target_platform}
 
@@ -103,8 +110,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %doc README
 %{_bindir}/%{name}
 %{_datadir}/%{name}
-%_datadir/applications/*.desktop
+%{_datadir}/applications/*.desktop
 %{_datadir}/pixmaps/%{name}.png
+
+%files plugins
+%{_libdir}/%{name}
 
 %files i18n
 %{_datadir}/%{name}/%{name}_*.qm
