@@ -10,6 +10,9 @@ Source0:        https://sourceforge.net/projects/%{name}/files/Psi/%{version}/%{
 Source1:        https://github.com/%{name}-im/%{name}-l10n/archive/%{version}.tar.gz#/%{name}-l10n-%{version}.tar.gz
 Source2:        https://github.com/%{name}-im/plugins/archive/%{version}.tar.gz#/%{name}-plugins-%{version}.tar.gz
 
+# Install AppData file for Gnome Software
+Patch0:         %{name}-add-appdata.patch
+
 BuildRequires:  pkgconfig(Qt5XmlPatterns)
 BuildRequires:  pkgconfig(Qt5Multimedia)
 BuildRequires:  pkgconfig(Qt5X11Extras)
@@ -23,6 +26,7 @@ BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(minizip)
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  desktop-file-utils
+BuildRequires:  libappstream-glib
 BuildRequires:  pkgconfig(Qt5Gui)
 BuildRequires:  pkgconfig(Qt5Svg)
 BuildRequires:  pkgconfig(Qt5Xml)
@@ -99,6 +103,7 @@ popd
 %find_lang %{name} --with-qt
 
 %check
+appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/%{name}.appdata.xml
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %files -f %{name}.lang
@@ -111,6 +116,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}/sound
 %{_datadir}/%{name}/themes
 %{_datadir}/%{name}/*.txt
+%{_datadir}/metainfo/%{name}.appdata.xml
 %{_datadir}/applications/*.desktop
 %{_datadir}/pixmaps/%{name}.png
 
