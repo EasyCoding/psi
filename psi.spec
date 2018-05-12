@@ -51,6 +51,12 @@ Requires:       qca-qt5-gnupg%{?_isa}
 # FIXME: wait for upstream to unbundle iris, rhbz#737304, https://github.com/psi-im/iris/issues/31
 Provides:   bundled(iris)
 
+# Obsolete and remove old subpackages
+Provides: %{name}-i18n = %{?epoch:%{epoch}:}%{version}-%{release}
+Obsoletes: %{name}-i18n < %{?epoch:%{epoch}:}%{version}-%{release}
+Provides: %{name}-icons = %{?epoch:%{epoch}:}%{version}-%{release}
+Obsoletes: %{name}-icons < %{?epoch:%{epoch}:}%{version}-%{release}
+
 %description
 %{name} is the premiere Instant Messaging application designed for Microsoft
 Windows, Apple Mac OS X and GNU/Linux. Built upon an open protocol named
@@ -60,20 +66,9 @@ with no bloated extras that slow your computer down. The Jabber protocol
 provides gateways to other protocols as AIM, ICQ, MSN and Yahoo!.
 If you want SSL support, install the qca-tls package.
 
-%package i18n
-Summary:    Language packs for %{name}
-BuildArch:  noarch
-Requires:   %{name} = %{?epoch:%{epoch}:}%{version}-%{release}
-
 %package plugins
 Summary:    Additional plugins for %{name}
 Requires:   %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
-
-%description -n %{name}-i18n
-This package adds internationalization to %{name}.
-If you want to add a translation from http://%{name}-im.org,
-just put the .qm file in %{_datadir}/%{name} (you'll have to do
-this as root), and restart %{name}.
 
 %description plugins
 This package adds additional plugins to %{name}.
@@ -115,9 +110,6 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %files plugins
 %{_libdir}/%{name}
-
-%files i18n
-%{_datadir}/%{name}/%{name}_*.qm
 
 
 %changelog
