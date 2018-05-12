@@ -1,48 +1,36 @@
 Name:       psi
-Version:    0.15
-Release:    23%{?dist}
+Version:    1.3
+Release:    1%{?dist}
+
 Summary:    Jabber client based on Qt
 License:    GPLv2+
-URL:        http://psi-im.org
+URL:        https://psi-im.org
 
-
-#Source0:    http://dl.sf.net/%{name}/%{name}-%{version}.tar.bz2
-Source0:    http://sf.net/projects/%{name}/files/Psi/%{version}/%{name}-%{version}.tar.bz2
-
-# Language packs, FIXME proper sources?
-Source10:   %{name}-lang-packs-0.13-1.tar.gz
+Source0:    https://sourceforge.net/projects/%{name}/files/Psi/%{version}/%{name}-%{version}.tar.xz
+Source1:    https://github.com/%{name}-im/%{name}-l10n/archive/%{version}.tar.gz#/%{name}-l10n-%{version}.tar.gz
 
 # Iconsets, FIXME proper sources?
-Source11:   emoticons-0.10.tar.gz
-Source12:   rostericons-0.10.tar.gz
+#Source11:   emoticons-0.10.tar.gz
+#Source12:   rostericons-0.10.tar.gz
 #Source13:   systemicons-0.9.3.tar.gz
 
-Source20: qmake-qt4.sh
-
-# external jdns/qjdns: remove configure, configure.exe and iris from upstream patch
-# https://github.com/psi-im/psi/commit/92cd9a58cd2d342a69647fc0d91af766c562df79
-Patch0:     %{name}-qjdns.patch
-
-# Use qconf-2.0: drop not qcm-modules related stuff
-# https://github.com/psi-im/psi/commit/352afe040cd4d860d6c5522b48534bef6ab12360
-Patch1:     %{name}-qconf-2.0.patch
-
-Patch2:     %{name}-narrowing.patch
-
 BuildRequires:  pkgconfig(minizip)
-BuildRequires:  pkgconfig(QtCore)
-BuildRequires:  pkgconfig(QtGui)
-BuildRequires:  pkgconfig(QtSvg)
-BuildRequires:  pkgconfig(QtXml)
-BuildRequires:  pkgconfig(QtXmlPatterns)
-BuildRequires:  pkgconfig(QtNetwork)
-BuildRequires:  pkgconfig(QtDBus)
-BuildRequires:  pkgconfig(qca2)
-%if 0%{?rhel} == 7 || 0%{?fedora} == 22
+BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(Qt5Gui)
+BuildRequires:  pkgconfig(Qt5Svg)
+BuildRequires:  pkgconfig(Qt5Xml)
+BuildRequires:  pkgconfig(Qt5XmlPatterns)
+BuildRequires:  pkgconfig(Qt5Network)
+BuildRequires:  pkgconfig(Qt5Multimedia)
+BuildRequires:  pkgconfig(Qt5DBus)
+BuildRequires:  pkgconfig(Qt5X11Extras)
 BuildRequires:  pkgconfig(qjdns)
-%else
-BuildRequires:  pkgconfig(qjdns-qt4)
-%endif
+BuildRequires:  pkgconfig(libidn)
+BuildRequires:  qca-qt5-devel
+BuildRequires:  qca-devel
+BuildRequires:  gcc-c++
+BuildRequires:  gcc
+
 
 BuildRequires:  pkgconfig(zlib)
 BuildRequires:  pkgconfig(glib-2.0)
@@ -51,13 +39,11 @@ BuildRequires:  pkgconfig(xscrnsaver)
 BuildRequires:  qconf >= 1:2.0
 BuildRequires:  desktop-file-utils
 
-Requires: sox
-Requires: gnupg
 # Required for SSL/TLS connections
-Requires:       qca-ossl%{?_isa}
+Requires:       qca-qt5-ossl%{?_isa}
+
 # Required for GnuPG encryption
-Requires:       qca-gnupg%{?_isa}
-# minimal qt4 runtime dep
+Requires:       qca-qt5-gnupg%{?_isa}
 
 # FIXME: wait for upstream to unbundle iris, rhbz#737304, https://github.com/psi-im/iris/issues/31
 Provides:   bundled(iris)
@@ -97,53 +83,29 @@ More icons can be found on http://jisp.netflint.net
 
 
 %prep
-%setup -q -n %{name}-0.15
-rm -r configure configure.exe mac win32
+%autosetup
 
 # Remove bundled libraries
-rm -fr src/libpsi/tools/zip/minizip
-rm -fr iris/src/jdns
-
-# FIXME unbundle iris
-#rm -r iris
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-
+rm -rf src/libpsi/tools/zip/minizip
+rm -rf iris/src/jdns
+#rm -rf iris
 
 %build
-CFLAGS="%{optflags}"; export CFLAGS
-CXXFLAGS="%{optflags}"; export CXXFLAGS
-LDFLAGS="%{?__global_ldflags}"; export LDFLAGS
-
-# force use of custom/local qmake, to inject proper build flags (above)
-install -m755 -D %{SOURCE20} bin/qmake-qt4
-PATH=`pwd`/bin:%{_qt4_bindir}:$PATH; export PATH
-which qmake-qt4
-
-qconf-qt4
-# %%configure does not work here
-./configure                     \
-    --qtdir=`pwd`               \
-    --qtselect=4                \
-    --prefix=%{_prefix}         \
-    --release                   \
-    --no-separate-debug-info    \
-    --verbose
-
+export QT_SELECT=5
+qconf-qt5
+%configure
 %make_build
 
-
 %install
-make install INSTALL_ROOT=%{buildroot}
+%make_install INSTALL_ROOT="%{buildroot}"
 
 # Install language packs
-tar -xzpf %{SOURCE10} -C %{buildroot}%{_datadir}/%{name}/
-rm -f %{buildroot}%{_datadir}/%{name}/getlangs.sh
+#tar -xzpf %{SOURCE10} -C %{buildroot}%{_datadir}/%{name}/
+#rm -f %{buildroot}%{_datadir}/%{name}/getlangs.sh
 
 ## Install iconsets
-tar -xzpf %{SOURCE11} -C %{buildroot}%{_datadir}/%{name}/iconsets/emoticons/
-tar -xzpf %{SOURCE12} -C %{buildroot}%{_datadir}/%{name}/iconsets/roster/
+#tar -xzpf %{SOURCE11} -C %{buildroot}%{_datadir}/%{name}/iconsets/emoticons/
+#tar -xzpf %{SOURCE12} -C %{buildroot}%{_datadir}/%{name}/iconsets/roster/
 #tar -xzpf %{SOURCE13} -C %{buildroot}%{_datadir}/%{name}/iconsets/system/
 
 
