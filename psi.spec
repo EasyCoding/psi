@@ -8,17 +8,14 @@ URL:        https://psi-im.org
 
 Source0:    https://sourceforge.net/projects/%{name}/files/Psi/%{version}/%{name}-%{version}.tar.xz
 Source1:    https://github.com/%{name}-im/%{name}-l10n/archive/%{version}.tar.gz#/%{name}-l10n-%{version}.tar.gz
-
-# Iconsets, FIXME proper sources?
-#Source11:   emoticons-0.10.tar.gz
-#Source12:   rostericons-0.10.tar.gz
-#Source13:   systemicons-0.9.3.tar.gz
+Source2:    https://github.com/%{name}-im/plugins/archive/%{version}.tar.gz#/%{name}-plugins-%{version}.tar.gz
 
 BuildRequires:  pkgconfig(minizip)
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Gui)
 BuildRequires:  pkgconfig(Qt5Svg)
 BuildRequires:  pkgconfig(Qt5Xml)
+BuildRequires:  pkgconfig(Qt5WebKit)
 BuildRequires:  pkgconfig(Qt5XmlPatterns)
 BuildRequires:  pkgconfig(Qt5Network)
 BuildRequires:  pkgconfig(Qt5Multimedia)
@@ -27,9 +24,15 @@ BuildRequires:  pkgconfig(Qt5X11Extras)
 BuildRequires:  pkgconfig(qjdns)
 BuildRequires:  pkgconfig(libidn)
 BuildRequires:  qca-qt5-devel
+BuildRequires:  ninja-build
 BuildRequires:  qca-devel
 BuildRequires:  gcc-c++
+BuildRequires:  cmake
 BuildRequires:  gcc
+
+BuildRequires:  libgcrypt-devel
+BuildRequires:  libotr-devel
+BuildRequires:  libtidy-devel
 
 
 BuildRequires:  pkgconfig(zlib)
@@ -68,46 +71,29 @@ If you want to add a translation from http://%{name}-im.org,
 just put the .qm file in %{_datadir}/%{name} (you'll have to do
 this as root), and restart %{name}.
 
-%package icons
-Summary:    Additional icons for %{name}
-BuildArch:  noarch
-Requires:   %{name} >= 0.9.1
-
-%description -n %{name}-icons
-This package contains additional icons for %{name}
-There are three types of icons:
-- emoticons, also known as smileys
-- roster icons, to change the appearance of %{name}'s main window
-- system icons, to change the rest of %{name}'s icons
-More icons can be found on http://jisp.netflint.net
-
 
 %prep
+# Unpacking main tarball...
 %autosetup
+
+# Unpacking tarball with plugins...
+tar -C src/plugins -xf %{SOURCE2} plugins-%{version}/generic --strip=1
+
+# Creating build directory...
+mkdir -p %{_target_platform}
 
 # Remove bundled libraries
 rm -rf src/libpsi/tools/zip/minizip
 rm -rf iris/src/jdns
-#rm -rf iris
 
 %build
-export QT_SELECT=5
-qconf-qt5
-%configure
-%make_build
+pushd %{_target_platform}
+    %cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DUSE_QT5=ON -DUSE_ENCHANT=ON -DUSE_HUNSPELL=OFF -DSEPARATE_QJDNS=ON -DENABLE_PLUGINS=ON -DENABLE_WEBKIT=OFF ..
+popd
+%ninja_build -C %{_target_platform}
 
 %install
-%make_install INSTALL_ROOT="%{buildroot}"
-
-# Install language packs
-#tar -xzpf %{SOURCE10} -C %{buildroot}%{_datadir}/%{name}/
-#rm -f %{buildroot}%{_datadir}/%{name}/getlangs.sh
-
-## Install iconsets
-#tar -xzpf %{SOURCE11} -C %{buildroot}%{_datadir}/%{name}/iconsets/emoticons/
-#tar -xzpf %{SOURCE12} -C %{buildroot}%{_datadir}/%{name}/iconsets/roster/
-#tar -xzpf %{SOURCE13} -C %{buildroot}%{_datadir}/%{name}/iconsets/system/
-
+%ninja_install -C %{_target_platform}
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
@@ -118,15 +104,10 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %_datadir/applications/*.desktop
-%{_datadir}/icons/hicolor/*/apps/%{name}.png
-%exclude %{_datadir}/%{name}/*.qm
-%exclude %{_datadir}/%{name}/iconsets/*/*.jisp
+%{_datadir}/pixmaps/%{name}.png
 
 %files i18n
 %{_datadir}/%{name}/%{name}_*.qm
-
-%files icons
-%{_datadir}/%{name}/iconsets/*/*.jisp
 
 
 %changelog
