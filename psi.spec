@@ -113,6 +113,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 
 %changelog
+* Sat May 12 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3-1
+- Updated to upstream version 1.3.
+- Major SPEC cleanup and fixes.
+- Added additional plugins as subpackage.
+
 * Fri Feb 09 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 0.15-23
 - Escape macros in %%changelog
 
