@@ -73,7 +73,7 @@ This package adds additional plugins to %{name}.
 %autosetup
 
 # Unpacking tarball with additional locales...
-tar -xf %{SOURCE1} psi-l10n-%{version}/translations --strip=1
+tar -xf %{SOURCE1} %{name}-l10n-%{version}/translations --strip=1
 echo "TRANSLATIONS = \\" > translations.pro
 echo translations/*.ts >> translations.pro
 
@@ -116,7 +116,6 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %files plugins
 %{_libdir}/%{name}
-
 
 %changelog
 * Sat May 12 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3-1
