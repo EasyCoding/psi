@@ -113,7 +113,12 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %license COPYING
 %doc README
 %{_bindir}/%{name}
-%{_datadir}/%{name}
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/certs
+%{_datadir}/%{name}/iconsets
+%{_datadir}/%{name}/sound
+%{_datadir}/%{name}/themes
+%{_datadir}/%{name}/*.txt
 %{_datadir}/applications/*.desktop
 %{_datadir}/pixmaps/%{name}.png
 
