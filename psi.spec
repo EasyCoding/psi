@@ -21,6 +21,7 @@ BuildRequires:  pkgconfig(Qt5Network)
 BuildRequires:  pkgconfig(Qt5Multimedia)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(Qt5X11Extras)
+BuildRequires:  cmake(Qt5LinguistTools)
 BuildRequires:  pkgconfig(qjdns)
 BuildRequires:  pkgconfig(libidn)
 BuildRequires:  qca-qt5-devel
@@ -47,6 +48,8 @@ Requires:       qca-qt5-ossl%{?_isa}
 
 # Required for GnuPG encryption
 Requires:       qca-qt5-gnupg%{?_isa}
+
+Requires:       hicolor-icon-theme
 
 # FIXME: wait for upstream to unbundle iris, rhbz#737304, https://github.com/psi-im/iris/issues/31
 Provides:   bundled(iris)
@@ -77,14 +80,19 @@ This package adds additional plugins to %{name}.
 # Unpacking main tarball...
 %autosetup
 
-# Unpacking tarball with plugins...
+# Unpacking tarball with additional locales...
+tar -xf %{SOURCE1} psi-l10n-%{version}/translations --strip=1
+echo "TRANSLATIONS = \\" > translations.pro
+echo translations/*.ts >> translations.pro
+
+# Unpacking tarball with additional plugins...
 tar -C src/plugins -xf %{SOURCE2} plugins-%{version}/generic --strip=1
 sed -i 's/psi-plus/psi/g' src/plugins/CMakeLists.txt
 
 # Creating build directory...
 mkdir -p %{_target_platform}
 
-# Remove bundled libraries
+# Removing bundled libraries...
 rm -rf src/libpsi/tools/zip/minizip
 rm -rf iris/src/jdns
 
@@ -96,11 +104,12 @@ popd
 
 %install
 %ninja_install -C %{_target_platform}
+%find_lang %{name} --with-qt
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
-%files
+%files -f %{name}.lang
 %license COPYING
 %doc README
 %{_bindir}/%{name}
