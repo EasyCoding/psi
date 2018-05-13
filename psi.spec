@@ -91,7 +91,15 @@ rm -rf iris/src/jdns
 
 %build
 pushd %{_target_platform}
-    %cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DUSE_QT5=ON -DUSE_ENCHANT=OFF -DUSE_HUNSPELL=ON -DUSE_QJDNS=ON -DSEPARATE_QJDNS=ON -DENABLE_PLUGINS=ON -DENABLE_WEBKIT=ON ..
+    %cmake -G Ninja -DCMAKE_BUILD_TYPE=Release \
+    -DUSE_QT5=ON \
+    -DUSE_ENCHANT=OFF \
+    -DUSE_HUNSPELL=ON \
+    -DUSE_QJDNS=ON \
+    -DSEPARATE_QJDNS=ON \
+    -DENABLE_PLUGINS=ON \
+    -DENABLE_WEBKIT=ON \
+    ..
 popd
 %ninja_build -C %{_target_platform}
 
