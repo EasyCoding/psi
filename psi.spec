@@ -91,7 +91,8 @@ rm -rf iris/src/jdns
 
 %build
 pushd %{_target_platform}
-    %cmake -G Ninja -DCMAKE_BUILD_TYPE=Release \
+    %cmake -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
     -DUSE_QT5=ON \
     -DUSE_ENCHANT=OFF \
     -DUSE_HUNSPELL=ON \
