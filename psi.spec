@@ -77,8 +77,6 @@ This package adds additional plugins to %{name}.
 
 # Unpacking tarball with additional locales...
 tar -xf %{SOURCE1} %{name}-l10n-%{version}/translations --strip=1
-echo "TRANSLATIONS = \\" > translations.pro
-echo translations/*.ts >> translations.pro
 
 # Unpacking tarball with additional plugins...
 tar -C src/plugins -xf %{SOURCE2} plugins-%{version}/generic --strip=1
