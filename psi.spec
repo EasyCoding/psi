@@ -1,6 +1,6 @@
 Name:           psi
 Version:        1.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 Summary:        Jabber client based on Qt
 License:        GPLv2+
@@ -136,6 +136,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
 
 %changelog
+* Wed May 30 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3-2
+- Fixed build against Qt 5.11 on Rawhide.
+
 * Sat May 12 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3-1
 - Updated to upstream version 1.3.
 - Major SPEC cleanup and fixes.
