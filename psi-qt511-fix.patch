@@ -1,0 +1,21 @@
+From 934be9c9ee43a6630d92266145549bc38537babb Mon Sep 17 00:00:00 2001
+From: Vitozz <thetvg@gmail.com>
+Date: Mon, 28 May 2018 20:46:52 +0300
+Subject: [PATCH] Try to fix build with qt-5.11
+
+---
+ generic/enummessagesplugin/enummessagesplugin.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/plugins/generic/enummessagesplugin/enummessagesplugin.cpp b/src/plugins/generic/enummessagesplugin/enummessagesplugin.cpp
+index a0cd6a0..5bd3cba 100644
+--- a/src/plugins/generic/enummessagesplugin/enummessagesplugin.cpp
++++ b/src/plugins/generic/enummessagesplugin/enummessagesplugin.cpp
+@@ -23,6 +23,7 @@
+ #include <QFile>
+ #include <QDataStream>
+ #include <QColorDialog>
++#include <QAction>
+ //#include <QTextStream>
+ 
+ #include "enummessagesplugin.h"

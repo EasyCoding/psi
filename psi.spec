@@ -10,6 +10,8 @@ Source0:        https://sourceforge.net/projects/%{name}/files/Psi/%{version}/%{
 Source1:        https://github.com/%{name}-im/%{name}-l10n/archive/%{version}.tar.gz#/%{name}-l10n-%{version}.tar.gz
 Source2:        https://github.com/%{name}-im/plugins/archive/%{version}.tar.gz#/%{name}-plugins-%{version}.tar.gz
 
+Patch100:       %{name}-qt511-fix.patch
+
 BuildRequires:  cmake(Qt5LinguistTools)
 BuildRequires:  cmake(Qt5XmlPatterns)
 BuildRequires:  cmake(Qt5Multimedia)
@@ -73,7 +75,7 @@ This package adds additional plugins to %{name}.
 
 %prep
 # Unpacking main tarball...
-%autosetup -p1
+%setup -q
 
 # Unpacking tarball with additional locales...
 tar -xf %{SOURCE1} %{name}-l10n-%{version}/translations --strip=1
@@ -81,6 +83,7 @@ tar -xf %{SOURCE1} %{name}-l10n-%{version}/translations --strip=1
 # Unpacking tarball with additional plugins...
 tar -C src/plugins -xf %{SOURCE2} plugins-%{version}/generic --strip=1
 sed -i 's/psi-plus/psi/g' src/plugins/CMakeLists.txt
+%patch100 -p1 -b .qt511
 
 # Creating build directory...
 mkdir -p %{_target_platform}
