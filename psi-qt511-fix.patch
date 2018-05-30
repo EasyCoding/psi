@@ -1,11 +1,28 @@
-From 934be9c9ee43a6630d92266145549bc38537babb Mon Sep 17 00:00:00 2001
-From: Vitozz <thetvg@gmail.com>
-Date: Mon, 28 May 2018 20:46:52 +0300
-Subject: [PATCH] Try to fix build with qt-5.11
+diff --git a/src/accountmanagedlg.cpp b/src/accountmanagedlg.cpp
+index 3770906d..6150349f 100644
+--- a/src/accountmanagedlg.cpp
++++ b/src/accountmanagedlg.cpp
+@@ -28,6 +28,7 @@
+ #include <QTimer>
+ #include <QHeaderView>
+ #include <QDropEvent>
++#include <QButtonGroup>
+ 
+ #include "psicon.h"
+ #include "psiaccount.h"
 
----
- generic/enummessagesplugin/enummessagesplugin.cpp | 1 +
- 1 file changed, 1 insertion(+)
+diff --git a/src/plugins/generic/jabberdiskplugin/jabberdiskcontroller.cpp b/src/plugins/generic/jabberdiskplugin/jabberdiskcontroller.cpp
+index 7bf211a..4a57a6a 100644
+--- a/src/plugins/generic/jabberdiskplugin/jabberdiskcontroller.cpp
++++ b/src/plugins/generic/jabberdiskplugin/jabberdiskcontroller.cpp
+@@ -19,6 +19,7 @@
+  */
+ 
+ #include <QDomElement>
++#include <QAction>
+ 
+ #include "jabberdiskcontroller.h"
+ #include "jd_mainwin.h"
 
 diff --git a/src/plugins/generic/enummessagesplugin/enummessagesplugin.cpp b/src/plugins/generic/enummessagesplugin/enummessagesplugin.cpp
 index a0cd6a0..5bd3cba 100644
@@ -19,3 +36,40 @@ index a0cd6a0..5bd3cba 100644
  //#include <QTextStream>
  
  #include "enummessagesplugin.h"
+
+diff --git a/src/plugins/generic/jabberdiskplugin/jabberdiskplugin.cpp b/src/plugins/generic/jabberdiskplugin/jabberdiskplugin.cpp
+index 68251ea..970f13f 100644
+--- a/src/plugins/generic/jabberdiskplugin/jabberdiskplugin.cpp
++++ b/src/plugins/generic/jabberdiskplugin/jabberdiskplugin.cpp
+@@ -19,6 +19,7 @@
+  */
+ 
+ #include <QDomElement>
++#include <QAction>
+ 
+ #include "jabberdiskplugin.h"
+ #include "jabberdiskcontroller.h"
+diff --git a/src/plugins/generic/storagenotesplugin/editnote.h b/src/plugins/generic/storagenotesplugin/editnote.h
+index a0c5e43..b30c180 100644
+--- a/src/plugins/generic/storagenotesplugin/editnote.h
++++ b/src/plugins/generic/storagenotesplugin/editnote.h
+@@ -23,6 +23,7 @@
+ 
+ #include "ui_editnote.h"
+ #include <QDomElement>
++#include <QModelIndex>
+ 
+ class EditNote : public QDialog
+ {
+diff --git a/src/plugins/generic/watcherplugin/watcherplugin.cpp b/src/plugins/generic/watcherplugin/watcherplugin.cpp
+index f043390..90d6a6b 100644
+--- a/src/plugins/generic/watcherplugin/watcherplugin.cpp
++++ b/src/plugins/generic/watcherplugin/watcherplugin.cpp
+@@ -21,6 +21,7 @@
+ #include <QFileDialog>
+ #include <QDomElement>
+ #include <QHash>
++#include <QAction>
+ 
+ #include "view.h"
+ #include "model.h"
