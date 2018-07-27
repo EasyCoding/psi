@@ -1,6 +1,6 @@
 Name:           psi
 Version:        1.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Summary:        Jabber client based on Qt
 License:        GPLv2+
@@ -136,6 +136,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
 
 %changelog
+* Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.3-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Wed May 30 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3-2
 - Fixed build against Qt 5.11 on Rawhide.
 
