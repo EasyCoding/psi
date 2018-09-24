@@ -1,6 +1,6 @@
 Name:           psi
 Version:        1.3
-Release:        3%{?dist}
+Release:        4%{?dist}
 
 Summary:        Jabber client based on Qt
 License:        GPLv2+
@@ -30,7 +30,7 @@ BuildRequires:  cmake(Qca)
 BuildRequires:  pkgconfig(xscrnsaver)
 BuildRequires:  pkgconfig(hunspell)
 BuildRequires:  pkgconfig(glib-2.0)
-BuildRequires:  pkgconfig(minizip)
+BuildRequires:  minizip-compat-devel
 BuildRequires:  pkgconfig(libotr)
 BuildRequires:  pkgconfig(libidn)
 BuildRequires:  pkgconfig(zlib)
@@ -136,6 +136,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
 
 %changelog
+* Tue Aug 28 2018 Patrik Novotný <panovotn@redhat.com> - 1.3-4
+- change requires to minizip-compat(-devel), rhbz#1609830, rhbz#1615381
+
 * Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
