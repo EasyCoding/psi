@@ -1,6 +1,6 @@
 Name:           psi
 Version:        1.3
-Release:        4%{?dist}
+Release:        5%{?dist}
 
 Summary:        Jabber client based on Qt
 License:        GPLv2+
@@ -30,11 +30,15 @@ BuildRequires:  cmake(Qca)
 BuildRequires:  pkgconfig(xscrnsaver)
 BuildRequires:  pkgconfig(hunspell)
 BuildRequires:  pkgconfig(glib-2.0)
-BuildRequires:  minizip-compat-devel
 BuildRequires:  pkgconfig(libotr)
 BuildRequires:  pkgconfig(libidn)
 BuildRequires:  pkgconfig(zlib)
 BuildRequires:  pkgconfig(tidy)
+%if 0%{?fedora} && 0%{?fedora} < 30
+BuildRequires:  pkgconfig(minizip)
+%else
+Provides:       bundled(minizip) = 1.2
+%endif
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
@@ -89,7 +93,9 @@ sed -i 's/psi-plus/psi/g' src/plugins/CMakeLists.txt
 mkdir -p %{_target_platform}
 
 # Removing bundled libraries...
+%if 0%{?fedora} && 0%{?fedora} < 30
 rm -rf src/libpsi/tools/zip/minizip
+%endif
 rm -rf iris/src/jdns
 
 %build
@@ -136,6 +142,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
 
 %changelog
+* Mon Sep 24 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3-5
+- Use bundled minizip for Fedora 30+.
+
 * Tue Aug 28 2018 Patrik Novotný <panovotn@redhat.com> - 1.3-4
 - change requires to minizip-compat(-devel), rhbz#1609830, rhbz#1615381
 
