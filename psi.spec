@@ -1,6 +1,6 @@
 Name:           psi
 Version:        1.3
-Release:        5%{?dist}
+Release:        7%{?dist}
 
 Summary:        Jabber client based on Qt
 License:        GPLv2+
@@ -10,6 +10,7 @@ Source0:        https://sourceforge.net/projects/%{name}/files/Psi/%{version}/%{
 Source1:        https://github.com/%{name}-im/%{name}-l10n/archive/%{version}.tar.gz#/%{name}-l10n-%{version}.tar.gz
 Source2:        https://github.com/%{name}-im/plugins/archive/%{version}.tar.gz#/%{name}-plugins-%{version}.tar.gz
 
+Patch1:         hunspell-1.7.patch
 Patch100:       %{name}-qt511-fix.patch
 
 BuildRequires:  cmake(Qt5LinguistTools)
@@ -87,6 +88,7 @@ tar -xf %{SOURCE1} %{name}-l10n-%{version}/translations --strip=1
 # Unpacking tarball with additional plugins...
 tar -C src/plugins -xf %{SOURCE2} plugins-%{version}/generic --strip=1
 sed -i 's/psi-plus/psi/g' src/plugins/CMakeLists.txt
+%patch1 -p1 -b .hunspell-1.7
 %patch100 -p1 -b .qt511
 
 # Creating build directory...
@@ -142,6 +144,12 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
 
 %changelog
+* Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.3-7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
+* Tue Nov 13 2018 Caolán McNamara <caolanm@redhat.com> - 1.3-6
+- rebuild for hunspell-1.7.0
+
 * Mon Sep 24 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3-5
 - Use bundled minizip for Fedora 30+.
 

@@ -1,0 +1,11 @@
+diff -ru psi-1.3/cmake/modules/FindHunspell.cmake psi-1.3/cmake/modules/FindHunspell.cmake
+--- psi-1.3/cmake/modules/FindHunspell.cmake	2018-11-13 15:30:06.428581813 +0000
++++ psi-1.3/cmake/modules/FindHunspell.cmake	2018-11-13 15:30:40.965863517 +0000
+@@ -64,6 +64,7 @@
+ 	hunspell-1.4
+ 	hunspell-1.5
+ 	hunspell-1.6
++	hunspell-1.7
+ 	libhunspell${d}
+ )
+ find_library(
