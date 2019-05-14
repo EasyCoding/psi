@@ -1,6 +1,6 @@
 Name:           psi
-Version:        1.3
-Release:        7%{?dist}
+Version:        1.4
+Release:        2%{?dist}
 
 Summary:        Jabber client based on Qt
 License:        GPLv2+
@@ -10,8 +10,8 @@ Source0:        https://sourceforge.net/projects/%{name}/files/Psi/%{version}/%{
 Source1:        https://github.com/%{name}-im/%{name}-l10n/archive/%{version}.tar.gz#/%{name}-l10n-%{version}.tar.gz
 Source2:        https://github.com/%{name}-im/plugins/archive/%{version}.tar.gz#/%{name}-plugins-%{version}.tar.gz
 
-Patch1:         hunspell-1.7.patch
-Patch100:       %{name}-qt511-fix.patch
+# https://github.com/psi-im/psi/commit/2212aeb8412ef790fba62e3cf96c36e6a8bd7b8e
+Patch100:       hunspell-1.7.patch
 
 BuildRequires:  cmake(Qt5LinguistTools)
 BuildRequires:  cmake(Qt5XmlPatterns)
@@ -80,7 +80,7 @@ This package adds additional plugins to %{name}.
 
 %prep
 # Unpacking main tarball...
-%setup -q
+%autosetup -p1
 
 # Unpacking tarball with additional locales...
 tar -xf %{SOURCE1} %{name}-l10n-%{version}/translations --strip=1
@@ -88,8 +88,6 @@ tar -xf %{SOURCE1} %{name}-l10n-%{version}/translations --strip=1
 # Unpacking tarball with additional plugins...
 tar -C src/plugins -xf %{SOURCE2} plugins-%{version}/generic --strip=1
 sed -i 's/psi-plus/psi/g' src/plugins/CMakeLists.txt
-%patch1 -p1 -b .hunspell-1.7
-%patch100 -p1 -b .qt511
 
 # Creating build directory...
 mkdir -p %{_target_platform}
@@ -119,11 +117,10 @@ popd
 %ninja_install -C %{_target_platform}
 %find_lang %{name} --with-qt
 
-install -d %{buildroot}%{_datadir}/metainfo
-install -m 0644 -p %{name}.appdata.xml %{buildroot}%{_datadir}/metainfo/%{name}.appdata.xml
+install -m 0644 -p -D %{name}.appdata.xml %{buildroot}%{_metainfodir}/%{name}.appdata.xml
 
 %check
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/%{name}.appdata.xml
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{name}.appdata.xml
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %files -f %{name}.lang
@@ -136,14 +133,20 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}/sound
 %{_datadir}/%{name}/themes
 %{_datadir}/%{name}/*.txt
-%{_datadir}/metainfo/%{name}.appdata.xml
-%{_datadir}/applications/*.desktop
+%{_metainfodir}/%{name}.appdata.xml
+%{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
 
 %files plugins
 %{_libdir}/%{name}
 
 %changelog
+* Sun May 12 2019 Rex Dieter <rdieter@fedoraproject.org> - 1.4-2
+- use %%_metainfodir macro
+
+* Wed Apr 10 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.4-1
+- Updated to upstream version 1.4.
+
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.3-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
