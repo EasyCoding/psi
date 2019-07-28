@@ -1,6 +1,6 @@
 Name:           psi
 Version:        1.4
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Summary:        Jabber client based on Qt
 License:        GPLv2+
@@ -141,6 +141,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
 
 %changelog
+* Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.4-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Sun May 12 2019 Rex Dieter <rdieter@fedoraproject.org> - 1.4-2
 - use %%_metainfodir macro
 
