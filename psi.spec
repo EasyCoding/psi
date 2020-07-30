@@ -1,6 +1,8 @@
+%undefine __cmake_in_source_build
+
 Name:           psi
 Version:        1.4
-Release:        4%{?dist}
+Release:        5%{?dist}
 
 Summary:        Jabber client based on Qt
 License:        GPLv2+
@@ -89,9 +91,6 @@ tar -xf %{SOURCE1} %{name}-l10n-%{version}/translations --strip=1
 tar -C src/plugins -xf %{SOURCE2} plugins-%{version}/generic --strip=1
 sed -i 's/psi-plus/psi/g' src/plugins/CMakeLists.txt
 
-# Creating build directory...
-mkdir -p %{_target_platform}
-
 # Removing bundled libraries...
 %if 0%{?fedora} && 0%{?fedora} < 30
 rm -rf src/libpsi/tools/zip/minizip
@@ -99,8 +98,7 @@ rm -rf src/libpsi/tools/zip/minizip
 rm -rf iris/src/jdns
 
 %build
-pushd %{_target_platform}
-    %cmake -G Ninja \
+%cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DUSE_QT5=ON \
     -DUSE_ENCHANT=OFF \
@@ -108,15 +106,12 @@ pushd %{_target_platform}
     -DUSE_QJDNS=ON \
     -DSEPARATE_QJDNS=ON \
     -DENABLE_PLUGINS=ON \
-    -DENABLE_WEBKIT=ON \
-    ..
-popd
-%ninja_build -C %{_target_platform}
+    -DENABLE_WEBKIT=ON
+%cmake_build
 
 %install
-%ninja_install -C %{_target_platform}
+%cmake_install
 %find_lang %{name} --with-qt
-
 install -m 0644 -p -D %{name}.appdata.xml %{buildroot}%{_metainfodir}/%{name}.appdata.xml
 
 %check
@@ -141,6 +136,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
 
 %changelog
+* Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.4-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.4-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
