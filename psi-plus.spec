@@ -38,11 +38,6 @@ BuildRequires:  pkgconfig(libotr)
 BuildRequires:  pkgconfig(libidn)
 BuildRequires:  pkgconfig(zlib)
 BuildRequires:  pkgconfig(tidy)
-%if 0%{?fedora} && 0%{?fedora} < 30
-BuildRequires:  pkgconfig(minizip)
-%else
-Provides:       bundled(minizip) = 1.2
-%endif
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
@@ -57,9 +52,8 @@ Requires:       qca-qt5-gnupg%{?_isa}
 Requires:       qca-qt5-ossl%{?_isa}
 Requires:       hicolor-icon-theme
 
-# New Fedora rules allow to use bundled libraries
-# https://bugzilla.redhat.com/show_bug.cgi?id=737304#c15
 Provides:       bundled(iris)
+Provides:       bundled(minizip) = 1.2
 
 # Obsolete and remove old subpackages
 Provides:       %{name}-i18n = %{?epoch:%{epoch}:}%{version}-%{release}
@@ -77,7 +71,7 @@ in open source technologies. %{name} contains all the features necessary to chat
 with no bloated extras that slow your computer down. The Jabber protocol
 provides gateways to other protocols as AIM, ICQ, MSN and Yahoo!.
 
-%package        plugins
+%package plugins
 Summary:        Additional plugins for %{name}
 # GPLv2 is used for the most plugins
 # BSD - screenshot plugin
@@ -85,132 +79,8 @@ Summary:        Additional plugins for %{name}
 License:        GPLv2+ and BSD and Beerware
 Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 
-%description    plugins
+%description plugins
 This package adds additional plugins to %{name}.
-
- * Attention Plugin
-This plugin is designed to send and receive special messages such as
-Attentions.
-
- * Autoreply Plugin
-This plugin acts as an auto-answering machine.
-
- * Birthday Reminder Plugin
-This plugin is designed to show reminders of upcoming birthdays.
-
- * Chess Plugin
-This plugin allows you to play chess with your friends.
-The plugin is compatible with a similar plugin for Tkabber.
-
- * Cleaner Plugin
-This plugin is designed to clear the avatar cache, saved local copies
-of vCards and history logs.
-
- * Client Switcher Plugin
-This plugin is intended to spoof version of the Jabber client, the
-name and type of operating system. It is possible to manually specify
-the version of the client and the operating system or choose from a
-predefined list.
-
- * Conference Logger Plugin
-This plugin is designed to save conference logs in which the Psi+
-user sits.
-
- * Content Downloader Plugin
-This plugin can currently be used to download and install roster
-iconsets and emoticons.
-
- * Enum Messages Plugin
-The plugin is designed to enumerate messages, adding the messages
-numbers in chat logs and notification of missed messages. Supports
-per contact on / off message enumeration via the buttons on the chats
-toolbar.
-
- * Extended Menu Plugin
-This plugin adds roster submenu 'Extended Actions' to contact's
-context menu. At the moment we have the following items: 'Copy JID',
-'Copy the nickname', 'Copy the status message' and 'Ping'.
-
- * Extended Options Plugin
-This plugin is designed to allow easy configuration of some advanced
-options in Psi+. This plugin gives you access to advanced application
-options, which do not have a graphical user interface.
-
- * GnuPG Key Manager
-GnuPG Key Manager can create, remove, export and import GnuPG keys.
-It can do only the base operations but I hope it will be enough for
-your needs.
-
- * History Keeper Plugin
-This plugin is designed to remove the history of selected contacts
-when the Psi+ is closed.
-
- * HTTP Upload Plugin
-This plugin allows uploading images and other files via XEP-0363.
-
- * ICQ Must Die Plugin
-This plugin is designed to help you transfer as many contacts as
-possible from ICQ to Jabber.
-
- * Image Plugin
-This plugin is designed to send images to roster contacts.
-
- * Image Preview Plugin
-This plugin shows the preview image for an image URL.
-
- * Juick Plugin
-This plugin is designed to work efficiently and comfortably with the
-Juick microblogging service.
-
- * PEP Change Notify Plugin
-The plugin is designed to display popup notifications on change of
-moods, activities and tunes at the contacts of the roster. In the
-settings you can choose which ones to include notification of events,
-specify the time within which a notice will appear, as well as play a
-sound specify.
-
- * Qip X-statuses Plugin
-This plugin is designed to display X-statuses of contacts using the
-QIP Infium jabber client.
-
- * Screenshot Plugin
-This plugin allows you to make a snapshot (screenshot) of the screen,
-edit the visible aria to make a screenshot and save the image to a
-local drive or upload to HTTP/FTP server.
-
- * Stop Spam Plugin
-This plugin is designed to block spam messages and other unwanted
-information from Psi+ users.
-
- * Storage Notes Plugin
-This plugin is an implementation of XEP-0049: Private XML Storage.
-The plugin is fully compatible with notes saved using Miranda IM.
-The plugin is designed to keep notes on the jabber server with the
-ability to access them from anywhere using Psi+ or Miranda IM.
-
- * Translate Plugin
-This plugin allows you to convert selected text into another language.
-
- * Video Status Changer Plugin
-This plugin is designed to set the custom status when you see the
-video in selected video player. Communication with players made by
-D-Bus.
-
- * Skins Plugin
-This plugin is designed to create, store and apply skins to Psi+.
-
- * Off-the-Record Messaging Plugin
-a cryptographic protocol that provides strong encryption for instant
-messaging conversations. OTR uses a combination of the AES
-symmetric-key algorithm, the Diffie–Hellman key exchange, and the SHA-1
-hash function. In addition to authentication and encryption, OTR
-provides perfect forward secrecy and malleable encryption.
-
- * PSTO Plugin
-Instant bloging service.
-
- * OMEMO Plugin
-A plugin that adds support for OMEMO encryption.
 
 %prep
 %autosetup -n %{name}-snapshots-%{version} -p1
@@ -219,9 +89,6 @@ A plugin that adds support for OMEMO encryption.
 tar -xf %{SOURCE1} %{name}-l10n-%{version}/translations --strip=1
 
 # Removing bundled libraries...
-%if 0%{?fedora} && 0%{?fedora} < 30
-rm -rf src/libpsi/tools/zip/minizip
-%endif
 rm -rf iris/src/jdns
 
 %build

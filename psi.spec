@@ -28,7 +28,6 @@ BuildRequires:  cmake(Qca-qt5)
 BuildRequires:  cmake(Qt5Gui)
 BuildRequires:  cmake(Qt5Svg)
 BuildRequires:  cmake(Qt5Xml)
-BuildRequires:  cmake(Qca)
 
 BuildRequires:  pkgconfig(xscrnsaver)
 BuildRequires:  pkgconfig(hunspell)
@@ -37,11 +36,6 @@ BuildRequires:  pkgconfig(libotr)
 BuildRequires:  pkgconfig(libidn)
 BuildRequires:  pkgconfig(zlib)
 BuildRequires:  pkgconfig(tidy)
-%if 0%{?fedora} && 0%{?fedora} < 30
-BuildRequires:  pkgconfig(minizip)
-%else
-Provides:       bundled(minizip) = 1.2
-%endif
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
@@ -56,8 +50,8 @@ Requires:       qca-qt5-gnupg%{?_isa}
 Requires:       qca-qt5-ossl%{?_isa}
 Requires:       hicolor-icon-theme
 
-# FIXME: wait for upstream to unbundle iris, rhbz#737304, https://github.com/psi-im/iris/issues/31
 Provides:       bundled(iris)
+Provides:       bundled(minizip) = 1.2
 
 # Obsolete and remove old subpackages
 Provides:       %{name}-i18n = %{?epoch:%{epoch}:}%{version}-%{release}
@@ -92,9 +86,6 @@ tar -C src/plugins -xf %{SOURCE2} plugins-%{version}/generic --strip=1
 sed -i 's/psi-plus/psi/g' src/plugins/CMakeLists.txt
 
 # Removing bundled libraries...
-%if 0%{?fedora} && 0%{?fedora} < 30
-rm -rf src/libpsi/tools/zip/minizip
-%endif
 rm -rf iris/src/jdns
 
 %build
@@ -122,12 +113,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %license COPYING
 %doc README
 %{_bindir}/%{name}
-%dir %{_datadir}/%{name}
-%{_datadir}/%{name}/certs
-%{_datadir}/%{name}/iconsets
-%{_datadir}/%{name}/sound
-%{_datadir}/%{name}/themes
-%{_datadir}/%{name}/*.txt
+%{_datadir}/%{name}/
 %{_metainfodir}/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
