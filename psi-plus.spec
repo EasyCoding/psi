@@ -3,7 +3,7 @@
 
 Name:           psi-plus
 Version:        1.4.1472
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 
 # GPLv2+ - core project.
@@ -59,8 +59,11 @@ Requires:       qca-qt5-gnupg%{?_isa}
 Requires:       qca-qt5-ossl%{?_isa}
 Requires:       hicolor-icon-theme
 
-Provides:       bundled(iris)
-Provides:       bundled(minizip) = 1.2
+Provides:       bundled(iris) = 0~git
+Provides:       bundled(minizip) = 1.2.11
+Provides:       bundled(qhttp) = 2.0.0
+Provides:       bundled(http-parser) = 2.9.4
+Provides:       bundled(libqite) = 0~git
 
 # Obsolete and remove old subpackages
 Provides:       %{name}-i18n = %{?epoch:%{epoch}:}%{version}-%{release}
@@ -144,6 +147,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
 
 %changelog
+* Fri Jul 31 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1:1.4.1472-2
+- Added virtual provides for the bundled libraries.
+
 * Fri Jul 31 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1:1.4.1472-1
 - Updated to version 1.4.1472.
 - Performed major SPEC cleanup and unification.
