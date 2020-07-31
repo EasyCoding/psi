@@ -20,8 +20,8 @@ BuildRequires:  cmake(Qt5LinguistTools)
 BuildRequires:  cmake(Qt5XmlPatterns)
 BuildRequires:  cmake(Qt5Multimedia)
 BuildRequires:  cmake(Qt5X11Extras)
+BuildRequires:  cmake(Qt5WebEngine)
 BuildRequires:  cmake(Qt5Network)
-BuildRequires:  cmake(Qt5WebKit)
 BuildRequires:  cmake(QJDns-qt5)
 BuildRequires:  cmake(Qt5Core)
 BuildRequires:  cmake(Qt5DBus)
@@ -31,6 +31,11 @@ BuildRequires:  cmake(Qt5Svg)
 BuildRequires:  cmake(Qt5Xml)
 
 BuildRequires:  pkgconfig(libsignal-protocol-c)
+BuildRequires:  pkgconfig(gstreamer-audio-1.0)
+BuildRequires:  pkgconfig(gstreamer-video-1.0)
+BuildRequires:  pkgconfig(gstreamer-base-1.0)
+BuildRequires:  pkgconfig(gstreamer-app-1.0)
+BuildRequires:  pkgconfig(gstreamer-1.0)
 BuildRequires:  pkgconfig(xscrnsaver)
 BuildRequires:  pkgconfig(hunspell)
 BuildRequires:  pkgconfig(glib-2.0)
@@ -64,6 +69,9 @@ Obsoletes:      %{name}-icons < %{?epoch:%{epoch}:}%{version}-%{release}
 Provides:       %{name}-common = %{?epoch:%{epoch}:}%{version}-%{release}
 Obsoletes:      %{name}-common < %{?epoch:%{epoch}:}%{version}-%{release}
 
+# Required qt5-qtwebengine is not available on some arches.
+ExclusiveArch: %{qt5_qtwebengine_arches}
+
 %description
 %{name} is the premiere Instant Messaging application designed for Microsoft
 Windows, Apple Mac OS X and GNU/Linux. Built upon an open protocol named
@@ -94,13 +102,18 @@ rm -rf iris/src/jdns
 %build
 %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
-    -DUSE_QT5=ON \
-    -DUSE_ENCHANT=OFF \
-    -DUSE_HUNSPELL=ON \
-    -DUSE_QJDNS=ON \
-    -DSEPARATE_QJDNS=ON \
-    -DENABLE_PLUGINS=ON \
-    -DENABLE_WEBKIT=ON
+    -DUSE_QT5:BOOL=ON \
+    -DUSE_ENCHANT:BOOL=OFF \
+    -DUSE_HUNSPELL:BOOL=ON \
+    -DUSE_QJDNS:BOOL=ON \
+    -DSEPARATE_QJDNS:BOOL=ON \
+    -DENABLE_PLUGINS:BOOL=ON \
+    -DUSE_KEYCHAIN:BOOL=ON \
+    -DBUILD_PSIMEDIA:BOOL=ON \
+    -DINSTALL_EXTRA_FILES:BOOL=ON \
+    -DUSE_DBUS:BOOL=ON \
+    -DPRODUCTION:BOOL=ON \
+    -DCHAT_TYPE:STRING=WEBENGINE
 %cmake_build
 
 %install

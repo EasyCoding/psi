@@ -94,13 +94,13 @@ rm -rf iris/src/jdns
 %build
 %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
-    -DUSE_QT5=ON \
-    -DUSE_ENCHANT=OFF \
-    -DUSE_HUNSPELL=ON \
-    -DUSE_QJDNS=ON \
-    -DSEPARATE_QJDNS=ON \
-    -DENABLE_PLUGINS=ON \
-    -DENABLE_WEBKIT=ON
+    -DUSE_QT5:BOOL=ON \
+    -DUSE_ENCHANT:BOOL=OFF \
+    -DUSE_HUNSPELL:BOOL=ON \
+    -DUSE_QJDNS:BOOL=ON \
+    -DSEPARATE_QJDNS:BOOL=ON \
+    -DENABLE_PLUGINS:BOOL=ON \
+    -DENABLE_WEBKIT:BOOL=ON
 %cmake_build
 
 %install
