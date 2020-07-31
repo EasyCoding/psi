@@ -145,6 +145,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %changelog
 * Fri Jul 31 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1:1.4.1472-1
 - Updated to version 1.4.1472.
+- Performed major SPEC cleanup and unification.
+- Switched from QtWebKit to QtWebEngine.
+- Enabled voice and video plugin.
 
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1:1.4.654-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
