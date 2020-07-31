@@ -9,7 +9,9 @@ Epoch:          1
 # GPLv2+ - core project.
 # LGPLv2.1+ - iris library, widgets, several tools.
 # zlib/libpng - bundled minizip library.
-License:        GPLv2+ and LGPLv2+ and zlib
+# MIT - bundled http-parser and qhttp libraries.
+# ASL 2.0 - bundled libqite library.
+License:        GPLv2+ and LGPLv2+ and zlib and MIT and ASL 2.0
 Summary:        Jabber client based on Qt
 URL:            https://%{name}.com
 
