@@ -6,12 +6,13 @@ Version:        1.4.1472
 Release:        1%{?dist}
 Epoch:          1
 
-Summary:        Jabber client based on Qt
-# GPLv2+ - core of Psi+
-# LGPLv2.1+ - iris library, Psi+ widgets, several Psi+ tools
-# zlib/libpng - UnZip 0.15 additionnal library
+# GPLv2+ - core project.
+# LGPLv2.1+ - iris library, widgets, several tools.
+# zlib/libpng - bundled minizip library.
 License:        GPLv2+ and LGPLv2+ and zlib
+Summary:        Jabber client based on Qt
 URL:            https://%{name}.com
+
 Source0:        https://github.com/%{name}/%{name}-snapshots/archive/%{version}/%{name}-%{version}.tar.gz
 Source1:        https://github.com/%{name}/%{name}-l10n/archive/%{version_l10n}/%{name}-l10n-%{version_l10n}.tar.gz
 
@@ -72,11 +73,10 @@ with no bloated extras that slow your computer down. The Jabber protocol
 provides gateways to other protocols as AIM, ICQ, MSN and Yahoo!.
 
 %package plugins
+# GPLv2+ is used for the most plugins.
+# BSD - screenshot plugin.
+License:        GPLv2+ and BSD
 Summary:        Additional plugins for %{name}
-# GPLv2 is used for the most plugins
-# BSD - screenshot plugin
-# Beerware - icqdie plugin
-License:        GPLv2+ and BSD and Beerware
 Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description plugins
@@ -116,9 +116,14 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %license COPYING
 %doc README
 %{_bindir}/%{name}
-%{_datadir}/%{name}/
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/certs
+%{_datadir}/%{name}/iconsets
+%{_datadir}/%{name}/sound
+%{_datadir}/%{name}/*.{txt,html}
 %{_metainfodir}/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
+%{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/pixmaps/%{name}.png
 
 %files plugins
