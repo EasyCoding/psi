@@ -53,8 +53,8 @@ Requires:       qca-qt5-gnupg%{?_isa}
 Requires:       qca-qt5-ossl%{?_isa}
 Requires:       hicolor-icon-theme
 
-Provides:       bundled(iris)
-Provides:       bundled(minizip) = 1.2
+Provides:       bundled(iris) = 0~git
+Provides:       bundled(minizip) = 1.2.11
 
 # Obsolete and remove old subpackages
 Provides:       %{name}-i18n = %{?epoch:%{epoch}:}%{version}-%{release}
@@ -86,7 +86,6 @@ tar -xf %{SOURCE1} %{name}-l10n-%{version}/translations --strip=1
 
 # Unpacking tarball with additional plugins...
 tar -C src/plugins -xf %{SOURCE2} plugins-%{version}/generic --strip=1
-sed -i 's/psi-plus/psi/g' src/plugins/CMakeLists.txt
 
 # Removing bundled libraries...
 rm -rf iris/src/jdns
@@ -100,7 +99,8 @@ rm -rf iris/src/jdns
     -DUSE_QJDNS:BOOL=ON \
     -DSEPARATE_QJDNS:BOOL=ON \
     -DENABLE_PLUGINS:BOOL=ON \
-    -DENABLE_WEBKIT:BOOL=ON
+    -DENABLE_WEBKIT:BOOL=ON \
+    -DPLUGINS_PATH:PATH="%{name}/plugins"
 %cmake_build
 
 %install
