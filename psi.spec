@@ -71,8 +71,11 @@ with no bloated extras that slow your computer down. The Jabber protocol
 provides gateways to other protocols as AIM, ICQ, MSN and Yahoo!.
 
 %package plugins
-Summary:       Additional plugins for %{name}
-Requires:      %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+# GPLv2+ is used for the most plugins.
+# BSD - screenshot plugin.
+License:        GPLv2+ and BSD
+Summary:        Additional plugins for %{name}
+Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description plugins
 This package adds additional plugins to %{name}.
