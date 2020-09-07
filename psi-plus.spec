@@ -1,9 +1,9 @@
 %undefine __cmake_in_source_build
-%global version_l10n 1.4.1472
+%global version_l10n 1.4.1473
 
 Name:           psi-plus
-Version:        1.4.1472
-Release:        2%{?dist}
+Version:        1.4.1490
+Release:        1%{?dist}
 Epoch:          1
 
 # GPLv2+ - core project.
@@ -100,7 +100,7 @@ This package adds additional plugins to %{name}.
 %autosetup -n %{name}-snapshots-%{version} -p1
 
 # Unpacking tarball with additional locales...
-tar -xf %{SOURCE1} %{name}-l10n-%{version}/translations --strip=1
+tar -xf %{SOURCE1} %{name}-l10n-%{version_l10n}/translations --strip=1
 
 # Removing bundled libraries...
 rm -rf iris/src/jdns
@@ -149,6 +149,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
 
 %changelog
+* Sat Sep 05 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1:1.4.1490-1
+- Updated to version 1.4.1490.
+
 * Fri Jul 31 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1:1.4.1472-2
 - Added virtual provides for the bundled libraries.
 
