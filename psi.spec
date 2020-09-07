@@ -1,8 +1,8 @@
 %undefine __cmake_in_source_build
 
 Name:           psi
-Version:        1.4
-Release:        5%{?dist}
+Version:        1.5
+Release:        1%{?dist}
 
 # GPLv2+ - core project.
 # LGPLv2.1+ - iris library, widgets, several tools.
@@ -130,6 +130,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
 
 %changelog
+* Mon Sep 07 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.5-1
+- Updated to upstream version 1.5.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.4-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
