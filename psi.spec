@@ -11,9 +11,9 @@ License:        GPLv2+ and LGPLv2+ and zlib
 Summary:        Jabber client based on Qt
 URL:            https://psi-im.org
 
-Source0:        https://sourceforge.net/projects/%{name}/files/Psi/%{version}/%{name}-%{version}.tar.xz
-Source1:        https://github.com/%{name}-im/%{name}-l10n/archive/%{version}.tar.gz#/%{name}-l10n-%{version}.tar.gz
-Source2:        https://github.com/%{name}-im/plugins/archive/%{version}.tar.gz#/%{name}-plugins-%{version}.tar.gz
+Source0:        https://github.com/%{name}-im/%{name}/releases/download/%{version}/%{name}-%{version}.tar.xz
+Source1:        https://github.com/%{name}-im/%{name}-l10n/archive/%{version}/%{name}-l10n-%{version}.tar.gz
+Source2:        https://github.com/%{name}-im/plugins/archive/%{version}/%{name}-plugins-%{version}.tar.gz
 
 # https://github.com/psi-im/psi/commit/2212aeb8412ef790fba62e3cf96c36e6a8bd7b8e
 Patch100:       hunspell-1.7.patch
