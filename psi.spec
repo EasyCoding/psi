@@ -103,7 +103,7 @@ rm -rf iris/src/jdns
     -DSEPARATE_QJDNS:BOOL=ON \
     -DENABLE_PLUGINS:BOOL=ON \
     -DENABLE_WEBKIT:BOOL=ON \
-    -DPLUGINS_PATH:PATH="%{name}/plugins"
+    -DPLUGINS_PATH:PATH="%{_lib}/%{name}/plugins"
 %cmake_build
 
 %install
