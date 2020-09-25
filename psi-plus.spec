@@ -1,8 +1,8 @@
 %undefine __cmake_in_source_build
-%global version_l10n 1.4.1473
+%global version_l10n 1.4.1510
 
 Name:           psi-plus
-Version:        1.4.1490
+Version:        1.4.1511
 Release:        1%{?dist}
 Epoch:          1
 
@@ -149,6 +149,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
 
 %changelog
+* Fri Sep 25 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1:1.4.1511-1
+- Updated to version 1.4.1511.
+
 * Sat Sep 05 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1:1.4.1490-1
 - Updated to version 1.4.1490.
 
