@@ -1,0 +1,10 @@
+--- a/src/plugins/generic/screenshotplugin/screenshot.cpp
++++ b/src/plugins/generic/screenshotplugin/screenshot.cpp
+@@ -29,6 +29,7 @@
+ #include <QPrintDialog>
+ #include <QPrinter>
+ #include <QPainter>
++#include <QPainterPath>
+ #include <QCloseEvent>
+ #include <QDesktopServices>
+ #include <QClipboard>

@@ -2,7 +2,7 @@
 
 Name:           psi
 Version:        1.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 # GPLv2+ - core project.
 # LGPLv2.1+ - iris library, widgets, several tools.
@@ -17,6 +17,8 @@ Source2:        https://github.com/%{name}-im/plugins/archive/%{version}/%{name}
 
 # https://github.com/psi-im/psi/commit/2212aeb8412ef790fba62e3cf96c36e6a8bd7b8e
 Patch100:       hunspell-1.7.patch
+# https://github.com/psi-im/plugins/commit/77d213dfd57df8658eae0266dcbc224323c6f5e8
+Patch101:       %{name}-screenshot-plugin-qt515.patch
 
 BuildRequires:  cmake(Qt5LinguistTools)
 BuildRequires:  cmake(Qt5XmlPatterns)
@@ -82,13 +84,17 @@ This package adds additional plugins to %{name}.
 
 %prep
 # Unpacking main tarball...
-%autosetup -p1
+%setup -q
 
 # Unpacking tarball with additional locales...
 tar -xf %{SOURCE1} %{name}-l10n-%{version}/translations --strip=1
 
 # Unpacking tarball with additional plugins...
 tar -C src/plugins -xf %{SOURCE2} plugins-%{version}/generic --strip=1
+
+# Applying patches...
+%patch100 -p1
+%patch101 -p1
 
 # Removing bundled libraries...
 rm -rf iris/src/jdns
@@ -133,6 +139,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
 
 %changelog
+* Sat Oct 03 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.5-2
+- Backported upstream patch with Qt 5.15 build fixes.
+
 * Mon Sep 07 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.5-1
 - Updated to upstream version 1.5.
 
