@@ -43,6 +43,7 @@ BuildRequires:  pkgconfig(xscrnsaver)
 BuildRequires:  pkgconfig(hunspell)
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(openssl)
+BuildRequires:  pkgconfig(usrsctp)
 BuildRequires:  pkgconfig(libotr)
 BuildRequires:  pkgconfig(libidn)
 BuildRequires:  pkgconfig(zlib)
@@ -119,6 +120,8 @@ rm -rf iris/src/jdns
     -DINSTALL_EXTRA_FILES:BOOL=ON \
     -DUSE_DBUS:BOOL=ON \
     -DPRODUCTION:BOOL=ON \
+    -DBUNDLED_QCA:BOOL=OFF \
+    -DBUNDLED_USRSCTP:BOOL=OFF \
     -DCHAT_TYPE:STRING=WEBENGINE
 %cmake_build
 
