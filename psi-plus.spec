@@ -1,8 +1,9 @@
 %undefine __cmake_in_source_build
+%global _lto_cflags %{nil}
 %global version_l10n 1.4.1523
 
 Name:           psi-plus
-Version:        1.4.1523
+Version:        1.4.1526
 Release:        1%{?dist}
 Epoch:          1
 
@@ -152,6 +153,10 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
 
 %changelog
+* Sat Oct 31 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1:1.4.1526-1
+- Updated to version 1.4.1526.
+- Disabled LTO.
+
 * Fri Oct 30 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1:1.4.1523-1
 - Updated to version 1.4.1523.
 
