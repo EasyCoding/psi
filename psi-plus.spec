@@ -26,7 +26,6 @@ BuildRequires:  cmake(Qt5X11Extras)
 BuildRequires:  cmake(Qt5WebEngine)
 BuildRequires:  cmake(Qt5Keychain)
 BuildRequires:  cmake(Qt5Network)
-BuildRequires:  cmake(QJDns-qt5)
 BuildRequires:  cmake(Qt5Core)
 BuildRequires:  cmake(Qt5DBus)
 BuildRequires:  cmake(Qca-qt5)
@@ -113,8 +112,8 @@ rm -rf iris/src/jdns
     -DUSE_QT5:BOOL=ON \
     -DUSE_ENCHANT:BOOL=OFF \
     -DUSE_HUNSPELL:BOOL=ON \
-    -DUSE_QJDNS:BOOL=ON \
-    -DSEPARATE_QJDNS:BOOL=ON \
+    -DUSE_QJDNS:BOOL=OFF \
+    -DSEPARATE_QJDNS:BOOL=OFF \
     -DENABLE_PLUGINS:BOOL=ON \
     -DUSE_KEYCHAIN:BOOL=ON \
     -DBUILD_PSIMEDIA:BOOL=ON \
