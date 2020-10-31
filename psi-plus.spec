@@ -1,5 +1,4 @@
 %undefine __cmake_in_source_build
-%global _lto_cflags %{nil}
 %global version_l10n 1.4.1523
 
 Name:           psi-plus
