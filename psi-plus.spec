@@ -1,9 +1,9 @@
 %undefine __cmake_in_source_build
-%global version_l10n 1.5.1477
+%global version_l10n 1.5.1480
 
 Name:           psi-plus
-Version:        1.5.1477
-Release:        2%{?dist}
+Version:        1.5.1480
+Release:        1%{?dist}
 Epoch:          1
 
 # GPLv2+ - core project.
@@ -151,6 +151,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
 
 %changelog
+* Thu Feb 18 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 1:1.5.1480-1
+- Updated to version 1.5.1480.
+
 * Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1:1.5.1477-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
