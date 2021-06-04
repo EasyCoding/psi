@@ -18,42 +18,42 @@ URL:            https://%{name}.com
 Source0:        https://github.com/%{name}/%{name}-snapshots/archive/%{version}/%{name}-%{version}.tar.gz
 Source1:        https://github.com/%{name}/%{name}-l10n/archive/%{version_l10n}/%{name}-l10n-%{version_l10n}.tar.gz
 
-BuildRequires:  cmake(Qt5LinguistTools)
-BuildRequires:  cmake(Qt5XmlPatterns)
-BuildRequires:  cmake(Qt5Multimedia)
-BuildRequires:  cmake(Qt5X11Extras)
-BuildRequires:  cmake(Qt5Keychain)
-BuildRequires:  cmake(Qt5Network)
+BuildRequires:  cmake(Qca-qt5)
 BuildRequires:  cmake(Qt5Core)
 BuildRequires:  cmake(Qt5DBus)
-BuildRequires:  cmake(Qca-qt5)
 BuildRequires:  cmake(Qt5Gui)
+BuildRequires:  cmake(Qt5Keychain)
+BuildRequires:  cmake(Qt5LinguistTools)
+BuildRequires:  cmake(Qt5Multimedia)
+BuildRequires:  cmake(Qt5Network)
 BuildRequires:  cmake(Qt5Svg)
+BuildRequires:  cmake(Qt5X11Extras)
 BuildRequires:  cmake(Qt5Xml)
+BuildRequires:  cmake(Qt5XmlPatterns)
 
-BuildRequires:  pkgconfig(libsignal-protocol-c)
-BuildRequires:  pkgconfig(gstreamer-audio-1.0)
-BuildRequires:  pkgconfig(gstreamer-video-1.0)
-BuildRequires:  pkgconfig(gstreamer-base-1.0)
-BuildRequires:  pkgconfig(gstreamer-app-1.0)
-BuildRequires:  pkgconfig(gstreamer-1.0)
-BuildRequires:  pkgconfig(xscrnsaver)
-BuildRequires:  pkgconfig(hunspell)
 BuildRequires:  pkgconfig(glib-2.0)
-BuildRequires:  pkgconfig(openssl)
-BuildRequires:  pkgconfig(usrsctp)
-BuildRequires:  pkgconfig(libotr)
+BuildRequires:  pkgconfig(gstreamer-1.0)
+BuildRequires:  pkgconfig(gstreamer-app-1.0)
+BuildRequires:  pkgconfig(gstreamer-audio-1.0)
+BuildRequires:  pkgconfig(gstreamer-base-1.0)
+BuildRequires:  pkgconfig(gstreamer-video-1.0)
+BuildRequires:  pkgconfig(hunspell)
 BuildRequires:  pkgconfig(libidn)
-BuildRequires:  pkgconfig(zlib)
+BuildRequires:  pkgconfig(libotr)
+BuildRequires:  pkgconfig(libsignal-protocol-c)
+BuildRequires:  pkgconfig(openssl)
 BuildRequires:  pkgconfig(tidy)
+BuildRequires:  pkgconfig(usrsctp)
+BuildRequires:  pkgconfig(xscrnsaver)
+BuildRequires:  pkgconfig(zlib)
 
+BuildRequires:  cmake
 BuildRequires:  desktop-file-utils
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 BuildRequires:  libappstream-glib
 BuildRequires:  libgcrypt-devel
 BuildRequires:  ninja-build
-BuildRequires:  gcc-c++
-BuildRequires:  cmake
-BuildRequires:  gcc
 
 # The required Qt5WebEngine is not available on some arches.
 %ifarch %{qt5_qtwebengine_arches}
@@ -61,15 +61,15 @@ BuildRequires:  cmake(Qt5WebEngine)
 %endif
 
 Recommends:     %{name}-plugins%{?_isa}
+Requires:       hicolor-icon-theme
 Requires:       qca-qt5-gnupg%{?_isa}
 Requires:       qca-qt5-ossl%{?_isa}
-Requires:       hicolor-icon-theme
 
+Provides:       bundled(http-parser) = 2.9.4
 Provides:       bundled(iris) = 0~git
+Provides:       bundled(libqite) = 0~git
 Provides:       bundled(minizip) = 1.2.11
 Provides:       bundled(qhttp) = 2.0.0
-Provides:       bundled(http-parser) = 2.9.4
-Provides:       bundled(libqite) = 0~git
 
 # Obsolete and remove old subpackages
 Provides:       %{name}-i18n = %{?epoch:%{epoch}:}%{version}-%{release}
