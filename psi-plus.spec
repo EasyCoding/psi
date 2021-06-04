@@ -58,6 +58,9 @@ BuildRequires:  ninja-build
 # The required Qt5WebEngine is not available on some arches.
 %ifarch %{qt5_qtwebengine_arches}
 BuildRequires:  cmake(Qt5WebEngine)
+%global msgtype WEBENGINE
+%else
+%global msgtype BASIC
 %endif
 
 Recommends:     %{name}-plugins%{?_isa}
@@ -126,11 +129,7 @@ rm -rf iris/src/jdns
     -DBUNDLED_USRSCTP:BOOL=OFF \
     -DUSE_X11:BOOL=ON \
     -DUSE_XSS:BOOL=ON \
-%ifarch %{qt5_qtwebengine_arches}
-    -DCHAT_TYPE:STRING=WEBENGINE
-%else
-    -DCHAT_TYPE:STRING=BASIC
-%endif
+    -DCHAT_TYPE:STRING=%{msgtype}
 %cmake_build
 
 %install
