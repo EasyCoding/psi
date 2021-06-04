@@ -72,12 +72,12 @@ Provides:       bundled(minizip) = 1.2.11
 Provides:       bundled(qhttp) = 2.0.0
 
 # Obsolete and remove old subpackages
+Provides:       %{name}-common = %{?epoch:%{epoch}:}%{version}-%{release}
+Obsoletes:      %{name}-common < %{?epoch:%{epoch}:}%{version}-%{release}
 Provides:       %{name}-i18n = %{?epoch:%{epoch}:}%{version}-%{release}
 Obsoletes:      %{name}-i18n < %{?epoch:%{epoch}:}%{version}-%{release}
 Provides:       %{name}-icons = %{?epoch:%{epoch}:}%{version}-%{release}
 Obsoletes:      %{name}-icons < %{?epoch:%{epoch}:}%{version}-%{release}
-Provides:       %{name}-common = %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes:      %{name}-common < %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description
 %{name} is the premiere Instant Messaging application designed for Microsoft
