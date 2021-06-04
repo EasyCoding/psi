@@ -22,7 +22,6 @@ BuildRequires:  cmake(Qt5LinguistTools)
 BuildRequires:  cmake(Qt5XmlPatterns)
 BuildRequires:  cmake(Qt5Multimedia)
 BuildRequires:  cmake(Qt5X11Extras)
-BuildRequires:  cmake(Qt5WebEngine)
 BuildRequires:  cmake(Qt5Keychain)
 BuildRequires:  cmake(Qt5Network)
 BuildRequires:  cmake(Qt5Core)
@@ -56,6 +55,11 @@ BuildRequires:  gcc-c++
 BuildRequires:  cmake
 BuildRequires:  gcc
 
+# The required Qt5WebEngine is not available on some arches.
+%ifarch %{qt5_qtwebengine_arches}
+BuildRequires:  cmake(Qt5WebEngine)
+%endif
+
 Recommends:     %{name}-plugins%{?_isa}
 Requires:       qca-qt5-gnupg%{?_isa}
 Requires:       qca-qt5-ossl%{?_isa}
@@ -74,9 +78,6 @@ Provides:       %{name}-icons = %{?epoch:%{epoch}:}%{version}-%{release}
 Obsoletes:      %{name}-icons < %{?epoch:%{epoch}:}%{version}-%{release}
 Provides:       %{name}-common = %{?epoch:%{epoch}:}%{version}-%{release}
 Obsoletes:      %{name}-common < %{?epoch:%{epoch}:}%{version}-%{release}
-
-# Required qt5-qtwebengine is not available on some arches.
-ExclusiveArch: %{qt5_qtwebengine_arches}
 
 %description
 %{name} is the premiere Instant Messaging application designed for Microsoft
@@ -125,7 +126,11 @@ rm -rf iris/src/jdns
     -DBUNDLED_USRSCTP:BOOL=OFF \
     -DUSE_X11:BOOL=ON \
     -DUSE_XSS:BOOL=ON \
+%ifarch %{qt5_qtwebengine_arches}
     -DCHAT_TYPE:STRING=WEBENGINE
+%else
+    -DCHAT_TYPE:STRING=BASIC
+%endif
 %cmake_build
 
 %install
