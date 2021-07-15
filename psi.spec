@@ -2,7 +2,7 @@
 
 Name:           psi
 Version:        1.5
-Release:        3%{?dist}
+Release:        4%{?dist}
 
 # GPLv2+ - core project.
 # LGPLv2.1+ - iris library, widgets, several tools.
@@ -139,6 +139,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
 
 %changelog
+* Thu Jul 15 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 1.5-4
+- Rebuilt due to libtidy soversion bump.
+
 * Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.5-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 

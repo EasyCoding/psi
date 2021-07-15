@@ -3,7 +3,7 @@
 
 Name:           psi-plus
 Version:        1.5.1548
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 
 # GPLv2+ - core project.
@@ -159,6 +159,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_libdir}/%{name}
 
 %changelog
+* Thu Jul 15 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 1:1.5.1548-2
+- Rebuilt due to libtidy soversion bump.
+
 * Mon Jun 14 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 1:1.5.1548-1
 - Updated to version 1.5.1548.
 
